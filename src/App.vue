@@ -4,9 +4,11 @@
 import CommonAsideVue from './components/CommonAside.vue';
 import CommonHeader from './components/CommonHeader.vue';
 import {useRouter } from 'vue-router'
+
+
 console.log('114514');
 const router = useRouter();
-router.push("Home")
+router.push("Home");
 </script>
 
 <template>
