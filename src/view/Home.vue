@@ -1,20 +1,51 @@
 <script setup>
 import { ref } from 'vue'
 import { Opportunity, StarFilled, Checked } from '@element-plus/icons-vue'
-import {getHomeChartData} from '../api/data.js'
+import { getHomeChartData } from '../api/data.js'
+import * as echarts from 'echarts'
 
 const tt = "系统功能介绍："
 const info_ = "本项目旨在建立一个完整完善的系统，提供一种可准确确定三维颜面解剖标志点的功能，复现并完善用多视图堆叠沙漏神经网络（Multi-view stacked hourglass convolutional neural networks，后简称“MSH-CNN”）结合赋权普氏分析算法的方法实现三维颜面正中矢状平面的自动构建。"
 const info = ref(info_)
 const visit_num = ref(114)
 const run_num = ref(514)
-const nn=ref(14)
-getHomeChartData().then(res=>{
-  console.log(res.data.data.text["野兽"]);
-  nn.value=res.data.data.text["野兽"]
+getHomeChartData().then(res => {
+  console.log(res);
+  const timeData=[];
+  const ChartTime = Object.keys(res.data.data);
+  ChartTime.forEach(key=>{
+    timeData.push(key)
+  });
+  const numData=[];
+  const ChartNum = Object.values(res.data.data);
+  ChartNum.forEach(key=>{
+    numData.push(key)
+  });
+  console.log(timeData);
+  console.log(numData);
+
+  const option = {
+    title: {
+      text: '网站访问记录'
+    },
+    xAxis: {
+      data: timeData
+    },
+    yAxis: {},//auto
+    legend: {
+      data: ['访问人次']
+    },
+    series: {
+      name: '访问人次',
+      type: 'line',
+      data: numData
+    }
+  };
+
+  const E = echarts.init(document.getElementById('myEcharts'));
+  E.setOption(option);
 });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
 
 <template>
   <el-row class="home" :gutter="20" style="height:100%; width:100%;">
@@ -24,7 +55,7 @@ getHomeChartData().then(res=>{
           <img src="../assets/logo.png" />
         </div>
         <div class="introduction">
-          <h2>{{nn}}{{ tt }}</h2>
+          <h2>{{ tt }}</h2>
           <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ info }}</h3>
         </div>
       </el-card>
@@ -50,7 +81,7 @@ getHomeChartData().then(res=>{
       </div>
       <div class="graph" style="margin-top: 20px;height:760px;">
         <el-card style="height:760px;">
-
+          <div style="height: 600px;width: 1100px;margin-left: 20px;margin-top: 20px;" id="myEcharts"></div>
         </el-card>
       </div>
     </el-col>
