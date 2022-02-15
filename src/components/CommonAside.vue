@@ -25,16 +25,15 @@
                 <span>功能分支</span>
             </template>
             <el-menu-item index="Datapush">数据提交</el-menu-item>
-            <el-menu-item index="Datapush">结果展示</el-menu-item>
-            <el-menu-item index="Datapush">历史结果</el-menu-item>
+            <el-menu-item index="History">历史结果</el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="/" key>
+        <el-menu-item index="Setting" key>
             <el-icon>
                 <setting />
             </el-icon>
             <template #title>设置</template>
         </el-menu-item>
-        <el-menu-item index="4" key>
+        <el-menu-item index="API" key>
             <el-icon>
                 <document />
             </el-icon>

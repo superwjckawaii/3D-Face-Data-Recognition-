@@ -6,3 +6,10 @@ export const getHomeChartData = () => {
     method: "get",
   });
 };
+export const pushFileData = (file)=> {
+  return axios.request({
+    url: "/Datapush/FileData",
+    method: "post",
+    data: file
+  });
+};

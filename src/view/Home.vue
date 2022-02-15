@@ -21,8 +21,6 @@ getHomeChartData().then(res => {
   ChartNum.forEach(key=>{
     numData.push(key)
   });
-  console.log(timeData);
-  console.log(numData);
 
   const option = {
     title: {

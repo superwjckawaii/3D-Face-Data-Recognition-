@@ -8,6 +8,9 @@ import {
 import Main from "../App.vue";
 import Home from "../view/Home.vue";
 import Datapush from "../view/Datapush.vue";
+import History from "../view/History.vue";
+import Setting from "../view/Setting.vue";
+import API from "../view/API.vue";
 
 // 2. 定义路由配置
 const routes = [
@@ -25,6 +28,21 @@ const routes = [
     path: "/Datapush",
     name: "Datapush",
     component:Datapush,
+  },
+  {
+    path: "/History",
+    name: "History",
+    component:History,
+  },
+  {
+    path: "/Setting",
+    name: "Setting",
+    component:Setting,
+  },
+  {
+    path: "/API",
+    name: "API",
+    component:API,
   },
 ];
 

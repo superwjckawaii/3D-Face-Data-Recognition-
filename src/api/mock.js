@@ -13,3 +13,10 @@ function HomeTest(){
     }
 }
 Mock.mock('/Home/ChartData',HomeTest)
+function no(data){
+    console.log(data.body)
+    return {
+        code: 114,
+    }
+}
+Mock.mock('/Datapush/FileData',no)
