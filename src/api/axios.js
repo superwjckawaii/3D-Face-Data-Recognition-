@@ -34,7 +34,7 @@ class HttpRequest {
         return response;
       },
       function (error) {
-        console.log("nmsl");
+        console.log("fail");
         // 对响应错误做点什么
         return Promise.reject(error);
       }

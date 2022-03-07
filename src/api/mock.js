@@ -13,8 +13,23 @@ function HomeTest(){
     }
 }
 Mock.mock('/Home/ChartData',HomeTest)
-function no(data){
-    console.log(data.body)
+function no(data){  //FormData格式文件
+    //console.log(data)
+
+    var file=new Blob([data.body],{type:'jpg'})
+
+    console.log(file)
+    /*if(window.navigator.msSaveOrOpenBlob){
+        window.navigator.msSaveOrOpenBlob(file,file.name)
+      }else{
+          var a=document.createElement("a")
+          a.href=URL.createObjectURL(file);
+          a.download="123.jpg"
+          console.log(a.download)
+          document.body.appendChild(a)
+          a.click()
+          console.log("保存成功！")
+      }*/
     return {
         code: 114,
     }
