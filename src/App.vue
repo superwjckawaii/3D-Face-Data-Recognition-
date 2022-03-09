@@ -8,7 +8,7 @@ import { getDjangoTest } from './api/data.js'
 
 const router = useRouter();
 router.push("Home");
-getDjangoTest().then()
+getDjangoTest()
 </script>
 
 <template>
@@ -43,7 +43,7 @@ html,body{
 }
 .el-main {
   padding-top: 0;
-  overflow: hidden;
+  //overflow: hidden;
 }
 
 </style>

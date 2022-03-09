@@ -11,24 +11,24 @@ interface RawFile {
   name: string
   url: string
 }
+const info_ = ref("支持相关的三维数据格式的面部数据文件上传（wrl、obj等格式）,右方展示图片：")
 const fileList = ref<RawFile[]>([])
 const imageUrl = ref('')
 const dialogImageUrl = ref('')
 const fileArray = ref(new Array());
+const loading = ref(false)
 const handleAvatarSuccess = (res: ElUploadProgressEvent, file: UploadFile) => {
   var myDate = new Date()
   fileArray.value.push({ name: file.name, time: myDate.toLocaleString() });
   //console.log(fileArray.value)
 }
 function executeButton(filename) {
-  console.log(filename)
+  //console.log(filename)
+  loading.value = true
   executeFile(filename).then(res => {
-    getImage().then(res => {
-      /*const myBlob = new Blob([res.data], { type: 'image/jpeg' })
-      const qrUrl = URL.createObjectURL(myBlob)*/
-      imageUrl.value = "http://localhost:8000/api/imageResult"
-    })
   })
+  imageUrl.value = "http://localhost:8000/api/imageResult?name=" + filename
+  loading.value = false
 }
 </script>
 
@@ -39,6 +39,8 @@ function executeButton(filename) {
         :data="fileArray"
         :default-sort="{ prop: 'date', order: 'descending' }"
         style="width: 100%"
+        v-loading="loading"
+        height="360"
       >
         <el-table-column prop="name" label="文件名"></el-table-column>
         <el-table-column prop="time" label="上传时间" sortable></el-table-column>
@@ -48,24 +50,32 @@ function executeButton(filename) {
           </template>
         </el-table-column>
       </el-table>
-      <el-upload
-        class="upload"
-        name="upload"
-        action="http://localhost:8000/api/Datapush"
-        accept="*.*"
-        :show-file-list="true"
-        multiple
-        :limit="3"
-        :file-list="fileList"
-        :on-success="handleAvatarSuccess"
-      >
-        <el-button size="large" type="primary" style="margin-top:20px;">
-          <el-icon>
-            <add-location></add-location>
-          </el-icon>选取文件
-        </el-button>
-      </el-upload>
-      <img v-if="imageUrl" :src="imageUrl" />
+      <el-card style="margin-top: 20px;">
+        <el-col :span="6">
+          <h3>{{ info_ }}</h3>
+          <el-upload
+            class="upload"
+            name="upload"
+            action="http://localhost:8000/api/Datapush"
+            accept=".wrl, .obj"
+            :show-file-list="false"
+            multiple
+            :limit="30"
+            :file-list="fileList"
+            :on-success="handleAvatarSuccess"
+            style="margin-bottom:20px;"
+          >
+            <el-button size="large" type="primary">
+              <el-icon>
+                <add-location></add-location>
+              </el-icon>选取文件
+            </el-button>
+          </el-upload>
+        </el-col>
+        <el-col :span="18">
+          <img v-if="imageUrl" :src="imageUrl" style="width:400px;height:400px; margin-top: 20px;margin-bottom:20px;" />
+        </el-col>
+      </el-card>
     </el-col>
   </el-row>
 </template>

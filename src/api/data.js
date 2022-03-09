@@ -2,7 +2,7 @@ import axios from "./axios.js";
 
 export const getHomeChartData = () => {
   return axios.request({
-    url: "/Home/ChartData",
+    url: "http://localhost:8000/api/charData",
     method: "get",
   });
 };
@@ -25,11 +25,14 @@ export const getVisit = () => {
     method: "get",
   });
 };
-export const getImage = () => {
+export const getImage = (filename) => {
   return axios.request({
     url: "http://localhost:8000/api/imageResult",
     method: "get",
     responseType: 'blob',//返回图片文件
+    params: {
+      name:filename
+    },
   });
 };
 export const executeFile = (filename) => {
