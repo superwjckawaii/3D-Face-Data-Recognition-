@@ -6,6 +6,12 @@ export const getHomeChartData = () => {
     method: "get",
   });
 };
+export const getHistoryChartData = () => {
+  return axios.request({
+    url: "http://localhost:8000/api/getHistoryChartData",
+    method: "get",
+  });
+};
 export const pushFileData = (file)=> {
   return axios.request({
     url: "/Datapush/FileData",
@@ -40,6 +46,42 @@ export const executeFile = (filename) => {
     url: "http://localhost:8000/api/excuteFile",
     method: "post",
     data: {
+      name:filename
+    },
+  });
+};
+export const getHistoryData = () => {
+  return axios.request({
+    url: "http://localhost:8000/api/getHistoryData",
+    method: "get",
+  });
+};
+export const getOriImg = (filename) => {
+  return axios.request({
+    url: "http://localhost:8000/api/OriImageResult",
+    method: "get",
+    responseType: 'blob',//返回图片文件
+    params: {
+      name:filename
+    },
+  });
+};
+export const getReImg = (filename) => {
+  return axios.request({
+    url: "http://localhost:8000/api/ReImageResult",
+    method: "get",
+    responseType: 'blob',//返回图片文件
+    params: {
+      name:filename
+    },
+  });
+};
+export const getObj = (filename) => {
+  return axios.request({
+    url: "http://localhost:8000/api/getObj",
+    method: "get",
+    //responseType: 'blob',//返回图片文件
+    params: {
       name:filename
     },
   });

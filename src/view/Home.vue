@@ -70,7 +70,7 @@ getHomeChartData().then(res => {
             <star-filled></star-filled>
           </el-icon>
           <div>
-            <p>访问人数:{{ visit_num }}</p>
+            <p>访问人次:{{ visit_num }}</p>
           </div>
         </el-card>
         <el-card style="padding:0;width:50%;margin-left:20px;display:flex;">

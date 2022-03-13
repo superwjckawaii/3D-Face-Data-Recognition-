@@ -19,16 +19,30 @@ const fileArray = ref(new Array());
 const loading = ref(false)
 const handleAvatarSuccess = (res: ElUploadProgressEvent, file: UploadFile) => {
   var myDate = new Date()
-  fileArray.value.push({ name: file.name, time: myDate.toLocaleString() });
+  fileArray.value.push({ name: file.name, time: myDate.toLocaleString(), hasMtl: false, hasRe: false, url: "http://localhost:8000/api/pushMtl?name=" + file.name });
   //console.log(fileArray.value)
 }
 function executeButton(filename) {
-  //console.log(filename)
+  console.log(filename)
   loading.value = true
   executeFile(filename).then(res => {
+    imageUrl.value = "http://localhost:8000/api/imageResult?name=" + filename
+    loading.value = false
+    fileArray.value.forEach((item, index, array) => {
+      if (item['name'] == filename) {
+        item['hasRe'] = true
+        return
+      }
+    })
   })
-  imageUrl.value = "http://localhost:8000/api/imageResult?name=" + filename
-  loading.value = false
+}
+function mtlSuccess(fname) {
+  fileArray.value.forEach((item, index, array) => {
+    if (item['name'] == fname) {
+      item['hasMtl'] = true
+      return
+    }
+  })
 }
 </script>
 
@@ -42,11 +56,27 @@ function executeButton(filename) {
         v-loading="loading"
         height="360"
       >
-        <el-table-column prop="name" label="文件名"></el-table-column>
-        <el-table-column prop="time" label="上传时间" sortable></el-table-column>
+        <el-table-column prop="name" label="文件名" width="300px"></el-table-column>
+        <el-table-column prop="time" label="上传时间" width="400px" sortable></el-table-column>
+        <el-table-column label="材质上传" width="300px">
+          <template v-slot="scope">
+            <el-upload
+              class="upload2"
+              name="upload2"
+              :action="scope.row.url"
+              accept=".mtl"
+              :limit="30"
+              :on-success="(res, file) => { mtlSuccess(scope.row.name) }"
+              :show-file-list="false"
+            >
+              <el-button>上传对应mtl文件</el-button>
+            </el-upload>
+          </template>
+        </el-table-column>
         <el-table-column label="操作">
           <template v-slot="scope">
-            <el-button @click="executeButton(scope.row.name)">标志该文件</el-button>
+            <el-button @click="executeButton(scope.row.name)" :disabled="!scope.row.hasMtl">标志该文件</el-button>
+            <el-button @click="executeButton(scope.row.name)" :disabled="!scope.row.hasRe">下载结果</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -73,7 +103,11 @@ function executeButton(filename) {
           </el-upload>
         </el-col>
         <el-col :span="18">
-          <img v-if="imageUrl" :src="imageUrl" style="width:400px;height:400px; margin-top: 20px;margin-bottom:20px;" />
+          <img
+            v-if="imageUrl"
+            :src="imageUrl"
+            style="width:400px;height:400px; margin-top: 20px;margin-bottom:20px;"
+          />
         </el-col>
       </el-card>
     </el-col>

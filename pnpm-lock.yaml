@@ -13,6 +13,9 @@ specifiers:
   less-loader: 5.0.0
   mockjs: ^1.1.0
   qs: ^6.10.3
+  three: ^0.138.3
+  three-css2drender: ^1.0.0
+  three-obj-mtl-loader: ^1.0.3
   vite: ^2.7.2
   vue: ^3.2.25
   vue-axios: ^3.4.1
@@ -32,6 +35,9 @@ dependencies:
   less-loader: 5.0.0_less@4.1.2+webpack@5.68.0
   mockjs: 1.1.0
   qs: 6.10.3
+  three: 0.138.3
+  three-css2drender: 1.0.0_three@0.138.3
+  three-obj-mtl-loader: 1.0.3_three@0.138.3
   vue: 3.2.26
   vue-axios: 3.4.1_axios@0.25.0+vue@3.2.26
   vuex: 4.0.2_vue@3.2.26
@@ -1208,6 +1214,26 @@ packages:
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21
+    dev: false
+
+  /three-css2drender/1.0.0_three@0.138.3:
+    resolution: {integrity: sha512-redDCSBDvgxiJIm6EDT8WO5WJTVg5gUEy/vjtAgJa/zX4peEUnZ8K+mXo6v94EudbnuI5h48/hQo9NExf04ENg==}
+    peerDependencies:
+      three: '>= 0.91'
+    dependencies:
+      three: 0.138.3
+    dev: false
+
+  /three-obj-mtl-loader/1.0.3_three@0.138.3:
+    resolution: {integrity: sha512-0z7BfyG6vYPY9RvxJvL4rq8PbNrF42Kn4zxeqTfeDzJN++2oKbtCQhxHs5vLULnDuCRTEyDFf5TYvO+1vnJ7KQ==}
+    peerDependencies:
+      three: '>= 0.91'
+    dependencies:
+      three: 0.138.3
+    dev: false
+
+  /three/0.138.3:
+    resolution: {integrity: sha512-4t1cKC8gimNyJChJbaklg8W/qj3PpsLJUIFm5LIuAy/hVxxNm1ru2FGTSfbTSsuHmC/7ipsyuGKqrSAKLNtkzg==}
     dev: false
 
   /throttle-debounce/1.1.0:
