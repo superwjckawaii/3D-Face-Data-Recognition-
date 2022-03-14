@@ -1,13 +1,13 @@
 <script setup >
 import { ref } from 'vue'
-import * as THREE from "three";
-import { OBJLoader, MTLLoader } from "three-obj-mtl-loader";
-import { CSS2DRenderer, CSS2DObject } from "three-css2drender";
-
 
 </script>
 
-<template></template>
+<template>
+    <div id="container">
+        <el-button @click="Render">There</el-button>
+    </div>
+</template>
 
 <style scoped>
 </style>
