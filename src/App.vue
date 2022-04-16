@@ -3,7 +3,7 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import CommonAsideVue from './components/CommonAside.vue';
 import CommonHeader from './components/CommonHeader.vue';
-import {useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { getDjangoTest } from './api/data.js'
 
 const router = useRouter();
@@ -21,7 +21,12 @@ getDjangoTest()
         <common-header></common-header>
       </el-header>
       <el-main>
-        <router-view></router-view>
+        <router-view v-slot="{ Component }">
+          <keep-alive>
+            <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+          </keep-alive>
+          <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
+        </router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -31,7 +36,8 @@ getDjangoTest()
 #app {
   height: 100vh;
 }
-html,body{
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -45,5 +51,4 @@ html,body{
   padding-top: 0;
   //overflow: hidden;
 }
-
 </style>

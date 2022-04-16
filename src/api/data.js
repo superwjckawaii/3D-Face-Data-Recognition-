@@ -1,14 +1,19 @@
 import axios from "./axios.js";
 
+const ServerUrl= "http://localhost:8000/"
+const BaseUrl=ServerUrl+"api/"
+
+export const baseUrl=BaseUrl;
+
 export const getHomeChartData = () => {
   return axios.request({
-    url: "http://localhost:8000/api/charData",
+    url: BaseUrl+"charData",
     method: "get",
   });
 };
 export const getHistoryChartData = () => {
   return axios.request({
-    url: "http://localhost:8000/api/getHistoryChartData",
+    url: BaseUrl+"getHistoryChartData",
     method: "get",
   });
 };
@@ -21,19 +26,19 @@ export const pushFileData = (file)=> {
 };
 export const getDjangoTest = () => {
   return axios.request({
-    url: "http://localhost:8000/api/test",
+    url: BaseUrl+"test",
     method: "get",
   });
 };
 export const getVisit = () => {
   return axios.request({
-    url: "http://localhost:8000/api/getVisit",
+    url: BaseUrl+"getVisit",
     method: "get",
   });
 };
 export const getImage = (filename) => {
   return axios.request({
-    url: "http://localhost:8000/api/imageResult",
+    url: BaseUrl+"imageResult",
     method: "get",
     responseType: 'blob',//返回图片文件
     params: {
@@ -43,7 +48,7 @@ export const getImage = (filename) => {
 };
 export const executeFile = (filename) => {
   return axios.request({
-    url: "http://localhost:8000/api/excuteFile",
+    url: BaseUrl+"excuteFile",
     method: "post",
     data: {
       name:filename
@@ -52,13 +57,13 @@ export const executeFile = (filename) => {
 };
 export const getHistoryData = () => {
   return axios.request({
-    url: "http://localhost:8000/api/getHistoryData",
+    url: BaseUrl+"getHistoryData",
     method: "get",
   });
 };
 export const getOriImg = (filename) => {
   return axios.request({
-    url: "http://localhost:8000/api/OriImageResult",
+    url: BaseUrl+"OriImageResult",
     method: "get",
     responseType: 'blob',//返回图片文件
     params: {
@@ -68,7 +73,7 @@ export const getOriImg = (filename) => {
 };
 export const getReImg = (filename) => {
   return axios.request({
-    url: "http://localhost:8000/api/ReImageResult",
+    url: BaseUrl+"ReImageResult",
     method: "get",
     responseType: 'blob',//返回图片文件
     params: {
@@ -78,10 +83,24 @@ export const getReImg = (filename) => {
 };
 export const getObj = (filename) => {
   return axios.request({
-    url: "http://localhost:8000/api/getObj",
+    url: BaseUrl+"getObj",
     method: "get",
-    //responseType: 'blob',//返回图片文件
     params: {
+      name:filename
+    },
+  });
+};
+export const FindFile = () => {
+  return axios.request({
+    url: BaseUrl+"FindFile",
+    method: "get",
+  });
+};
+export const DeleteFile = (filename) => {
+  return axios.request({
+    url: BaseUrl+"DeleteFile",
+    method: "post",
+    data: {
       name:filename
     },
   });

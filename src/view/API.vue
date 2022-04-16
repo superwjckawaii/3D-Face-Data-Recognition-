@@ -22,12 +22,12 @@ const material = new THREE.MeshNormalMaterial()
 
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
-/*
+
 new OBJLoader().load("src/assets/model/testmeshA.obj", obj => {
     obj.position.set(0,0,0)
     scene.add(obj)
 })
-*/
+
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
 

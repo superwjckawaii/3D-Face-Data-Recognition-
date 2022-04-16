@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from './Container.vue'
+//import App from './App.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import RouteIndex from './router'
@@ -11,12 +12,23 @@ import './api/mock.js'
 const store = createStore({
     state () {
       return {
-        IsTab:false
+        IsTab:false,
+        IsUser:true,
+        hasIdentity:false,
       }
     },
     mutations: {
       changeTab (state) {
         state.IsTab=!state.IsTab
+      },
+      notUser(state){
+        state.IsUser=false
+      },
+      getIdentity(state){
+        return state.hasIdentity
+      },
+      signIn(state){
+        state.hasIdentity=true
       }
     }
   })
@@ -26,6 +38,15 @@ app.use(ElementPlus)
 app.use(RouteIndex)
 app.use(store)
 app.use(VueAxios,axios)
+
+//登入校验
+RouteIndex.beforeEach((to,from) => {
+  //console.log(store.state.hasIdentity)
+  if(store.state.hasIdentity||to.name=='Signin')
+    return true
+  RouteIndex.push('Signin')
+  return true
+})
 //app.component()
 app.mount('#app')
 

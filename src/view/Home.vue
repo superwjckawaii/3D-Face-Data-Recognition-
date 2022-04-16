@@ -26,7 +26,7 @@ getHomeChartData().then(res => {
   ChartNum.forEach(key => {
     numData.push(key)
   });
-
+  //Echart参数设置
   const option = {
     title: {
       text: '网站访问记录'

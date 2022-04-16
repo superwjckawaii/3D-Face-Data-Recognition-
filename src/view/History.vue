@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { getHistoryData, getOriImg, getReImg, getHistoryChartData } from '../api/data.js'
+import { getHistoryData, getOriImg, getReImg, getHistoryChartData, baseUrl } from '../api/data.js'
 import * as echarts from 'echarts'
 const loading = ref(true)
 const dbloading = ref(true)
@@ -16,8 +16,8 @@ getHistoryData().then(res => {
     dbloading.value = false
 })
 function getImg(filename) {
-    OriImgUrl.value = "http://localhost:8000/api/getOriImg?name=" + filename
-    ReImgUrl.value = "http://localhost:8000/api/getReImg?name=" + filename
+    OriImgUrl.value = baseUrl + "getOriImg?name=" + filename
+    ReImgUrl.value = baseUrl + "getReImg?name=" + filename
     loading.value = false
 }
 getHistoryChartData().then(res => {
@@ -73,7 +73,6 @@ getHistoryChartData().then(res => {
                     <el-table-column label="操作" width="200px">
                         <template v-slot="scope">
                             <el-button @click="getImg(scope.row.name)">显示</el-button>
-                            <el-button @click="getImg(scope.row.name)">下载</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -107,14 +106,14 @@ getHistoryChartData().then(res => {
                                     <h3 class="pp" style="width:200px;">原图片：</h3>
                                     <img
                                         :src="OriImgUrl"
-                                        style="margin-top:20px;width: 600px; height: 320px;"
+                                        style="margin-top:20px;max-width: 600px; max-height: 320px;width:auto;height:auto;"
                                     />
                                 </div>
                                 <div style="margin-left:100px;float:left;">
                                     <h3 class="pp" style="width:200px;">标志结果：</h3>
                                     <img
                                         :src="ReImgUrl"
-                                        style="margin-top:20px;width: 320px; height: 320px;"
+                                        style="margin-top:20px;max-width: 300px; max-height: 320px;width:auto;height:auto;"
                                     />
                                 </div>
                             </div>
