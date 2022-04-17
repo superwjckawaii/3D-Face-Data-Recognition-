@@ -22,15 +22,18 @@ const PictureData = ref(new Array())
 RefreshFileArray()
 function RefreshFileArray() {
   FindFile().then(res => {
-    //console.log(res.data.data)
-    PictureData.value=[]
-    fileArray.value=[]
-    res.data.data['mtl'].forEach(key => {
-      
-    })
-    res.data.data['obj']
+    console.log(res.data.data)
+    PictureData.value = []
+    fileArray.value = []
+    for (var i = 0; i < res.data.data['obj'].length; i++) {
+      if (res.data.data['hasMtl'])
+        fileArray.value.push({ name: res.data.data['obj'][i], time: res.data.data['objTime'][i], hasMtl: true, hasRe: false, url: baseUrl + "pushMtl?name=" + res.data.data['obj'][i] })
+      else fileArray.value.push({ name: res.data.data['obj'][i], time: res.data.data['objTime'][i], hasMtl: false, hasRe: false, url: baseUrl + "pushMtl?name=" + res.data.data['obj'][i] });
+
+    }
+
     res.data.data['other'].forEach(key => {
-      PictureData.value.push({name:key})
+      PictureData.value.push({ name: key })
     })
     fileArray.value.push()
   })
@@ -48,9 +51,10 @@ function DeletePic(Picname) {
   })
 }
 const handleAvatarSuccess = (res: ElUploadProgressEvent, file: UploadFile) => {
-  var myDate = new Date()
-  fileArray.value.push({ name: file.name, time: myDate.toLocaleString(), hasMtl: false, hasRe: false, url: baseUrl + "pushMtl?name=" + file.name });
-  //console.log(fileArray.value)
+  /*var myDate = new Date()
+  fileArray.value.push({ name: file.name, time: myDate.toLocaleString(), hasMtl: false, hasRe: false, url: baseUrl + "pushMtl?name=" + file.name })
+  console.log(fileArray.value)*/
+  RefreshFileArray()
 }
 function executeButton(filename) {
   //console.log(filename)
@@ -68,12 +72,13 @@ function executeButton(filename) {
   })
 }
 function mtlSuccess(fname) {
-  fileArray.value.forEach((item, index, array) => {
+  /*fileArray.value.forEach((item, index, array) => {
     if (item['name'] == fname) {
       item['hasMtl'] = true
       return
     }
-  })
+  })*/
+  RefreshFileArray()
 }
 function downLoad(fname) {
   window.location.href = baseUrl + "getObj?name=" + fname
@@ -105,6 +110,10 @@ function downLoad(fname) {
       <el-card style="margin-top: 20px;">
         <el-col :span="8">
           <h2>图片文件</h2>
+          <el-upload class="upload2" name="upload2" :action="upUrl" accept=".png,.jpg,.jpeg" :limit="30"
+              :on-success="handleAvatarSuccess" :show-file-list="false">
+              <el-button>上传图片文件</el-button>
+            </el-upload>
           <el-table :data="PictureData" :default-sort="{ prop: '文件名', order: 'descending' }" style="width: 100%"
             height="770">
             <el-table-column prop="name" label="文件名" width="200px" sortable></el-table-column>
