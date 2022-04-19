@@ -25,13 +25,13 @@
                 <span>功能分支</span>
             </template>
             <el-menu-item index="Datapush">数据提交</el-menu-item>
-            <el-menu-item index="History">历史结果</el-menu-item>
+            <el-menu-item index="History" :disabled="!store.state.IsUser">历史结果</el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="Setting" key>
+        <el-menu-item index="Setting" :disabled="!store.state.IsUser" key>
             <el-icon>
                 <setting />
             </el-icon>
-            <template #title>设置</template>
+            <template #title>设置和记录</template>
         </el-menu-item>
         <el-menu-item index="API" key>
             <el-icon>
@@ -55,7 +55,6 @@ import {
 const default_page=ref("Home")
 
 const store = useStore()
-//const isCollapse = ref(false)
 
 
 </script>

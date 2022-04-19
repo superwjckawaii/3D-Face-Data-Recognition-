@@ -105,3 +105,13 @@ export const DeleteFile = (filename) => {
     },
   });
 };
+export const isUser = (Tname,Tpassword) => {
+  return axios.request({
+    url: BaseUrl+"isUser",
+    method: "get",
+    params: {
+      name:Tname,
+      password:Tpassword
+    },
+  });
+};
