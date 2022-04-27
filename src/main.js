@@ -17,6 +17,7 @@ const store = createStore({
         IsTab:false,
         IsUser:true,
         hasIdentity:false,
+        Identity:'用户',
       }
     },
     mutations: {
@@ -25,12 +26,19 @@ const store = createStore({
       },
       notUser(state){
         state.IsUser=false
+        state.Identity='游客'
       },
       getIdentity(state){
         return state.hasIdentity
       },
       signIn(state){
         state.hasIdentity=true
+        state.Identity='用户'
+      },
+      exit(state){
+        state.hasIdentity=false
+        state.IsUser=true
+        state.Identity='用户'
       }
     }
   })

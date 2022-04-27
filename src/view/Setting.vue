@@ -1,6 +1,7 @@
 <script setup >
 import * as THREE from 'three'
 import { OBJLoader, MTLLoader } from "three-obj-mtl-loader"
+import { baseUrl } from "../api/data.js"
 
 // init
 
@@ -23,13 +24,18 @@ const material = new THREE.MeshNormalMaterial()
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
-new OBJLoader().load("src/assets/model/testmeshA.obj", obj => {
-    obj.position.set(0,0,0)
-    scene.add(obj)
+let objLoader = new OBJLoader();
+let mtlLoader = new MTLLoader();
+mtlLoader.load(baseUrl+'getObj?name=testmeshA.mtl', function (materials) {
+    objLoader.setMaterials(materials);
+    objLoader.load(baseUrl+'getObj?name=testmeshA.obj', function (obj) {
+        //obj.position.set(10, 0, -6);
+        //obj.scale.set(0.01, 0.01, 0.01);
+        scene.add(obj);
+    })
 })
-
-const renderer = new THREE.WebGLRenderer({ antialias: true })
-renderer.setSize(window.innerWidth, window.innerHeight)
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+renderer.setSize(600, 600)
 
 // animation
 
@@ -51,8 +57,9 @@ function Render() {
 </script>
 
 <template>
-    <div id="container">
+    <div>
         <el-button @click="Render">3D Model</el-button>
+        <div id="container" style="height:600px; width:600px"></div>
     </div>
 </template>
 

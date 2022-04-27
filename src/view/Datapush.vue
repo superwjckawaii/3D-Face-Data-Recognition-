@@ -22,7 +22,7 @@ const PictureData = ref(new Array())
 RefreshFileArray()
 function RefreshFileArray() {
   FindFile().then(res => {
-    console.log(res.data.data)
+    //console.log(res.data.data)
     PictureData.value = []
     fileArray.value = []
     for (var i = 0; i < res.data.data['obj'].length; i++) {
@@ -83,6 +83,22 @@ function mtlSuccess(fname) {
 function downLoad(fname) {
   window.location.href = baseUrl + "getObj?name=" + fname
 }
+function downLoadtxt(fname) {
+  window.location.href = baseUrl + "getTxt?name=" + fname
+}
+function DeleteModel(fname) {
+  DeleteFile(fname).then(res => {
+    var index
+    for (var i = 0; i < fileArray.value.length; i++) {
+      if (fileArray.value[i]['name'] == fname) {
+        index = i
+        break
+      }
+    }
+    fileArray.value.splice(index, 1)
+  })
+  DeleteFile(fname.slice(0, -4) + '.mtl')
+}
 </script>
 
 <template>
@@ -103,7 +119,9 @@ function downLoad(fname) {
         <el-table-column label="操作">
           <template v-slot="scope">
             <el-button @click="executeButton(scope.row.name)" :disabled="!scope.row.hasMtl">标志该文件</el-button>
-            <el-button @click="downLoad(scope.row.name)" :disabled="!scope.row.hasRe">下载结果</el-button>
+            <el-button @click="downLoad(scope.row.name)" :disabled="!scope.row.hasRe">下载模型</el-button>
+            <el-button @click="downLoadtxt(scope.row.name)" :disabled="!scope.row.hasRe">下载标志点</el-button>
+            <el-button @click="DeleteModel(scope.row.name)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -111,9 +129,9 @@ function downLoad(fname) {
         <el-col :span="8">
           <h2>图片文件</h2>
           <el-upload class="upload2" name="upload2" :action="upUrl" accept=".png,.jpg,.jpeg" :limit="30"
-              :on-success="handleAvatarSuccess" :show-file-list="false">
-              <el-button>上传图片文件</el-button>
-            </el-upload>
+            :on-success="handleAvatarSuccess" :show-file-list="false">
+            <el-button>上传图片文件</el-button>
+          </el-upload>
           <el-table :data="PictureData" :default-sort="{ prop: '文件名', order: 'descending' }" style="width: 100%"
             height="770">
             <el-table-column prop="name" label="文件名" width="200px" sortable></el-table-column>

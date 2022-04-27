@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { Opportunity, StarFilled, Checked } from '@element-plus/icons-vue'
 import { getHomeChartData, getVisit } from '../api/data.js'
 import * as echarts from 'echarts'
+import { useSize } from 'element-plus'
 
 const tt = "系统功能介绍："
 const info_ = "本项目旨在建立一个完整完善的系统，提供一种可准确确定三维颜面解剖标志点的功能，复现并完善用多视图堆叠沙漏神经网络（Multi-view stacked hourglass convolutional neural networks，后简称“MSH-CNN”）结合赋权普氏分析算法的方法实现三维颜面正中矢状平面的自动构建。"
@@ -11,8 +12,8 @@ const visit_num = ref(0)
 const run_num = ref(0)
 
 getVisit().then(res => {
-   visit_num.value=res.data.msg[1]
-   run_num.value=res.data.msg[0]
+  visit_num.value = res.data.msg[1]
+  run_num.value = res.data.msg[0]
 })
 getHomeChartData().then(res => {
   //console.log(res);
@@ -41,12 +42,76 @@ getHomeChartData().then(res => {
     series: {
       name: '访问人次',
       type: 'line',
-      data: numData
+      label: {
+        show: false,
+        fontSize: '22',
+        position: 'center',
+        formatter: function(param) {
+            return '访问人次:'+param.data;
+          },
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontWeight: 'bold',
+          formatter: function(param) {
+            return '访问人次'+param.data;
+          },
+        }
+      },
+      itemStyle: {
+        fontSize: '22',
+      },
+      data: numData,
+      symbolSize: 10,
     }
   };
 
   const E = echarts.init(document.getElementById('myEcharts'));
   E.setOption(option);
+
+  const option2 = {
+    backgroundColor: '#fff',
+    title: {
+      left: 'center',
+      text: '用户评价'
+    },
+    legend: {
+      orient: 'vertical',
+      x: 'left',
+      data: ['一星', '二星', '三星', '四星', '五星'],
+      fontSize: '20',
+    },
+    series: {
+      name: '满意度',
+      type: 'pie',
+      avoidLabelOverlap: false,
+      radius: ['40%', '70%'],     //半径
+      //roseType: 'angle',
+      labelLine: {
+        show: false,
+      },
+      label: {
+        show: false,
+        fontSize: '22',
+        position: 'center',
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontWeight: 'bold'
+        }
+      },
+      data: [{ name: '一星', value: 180 },
+      { name: '二星', value: 50 },
+      { name: '三星', value: 114 },
+      { name: '四星', value: 1122 },
+      { name: '五星', value: 823 }
+      ]
+    }
+  };
+  const E2 = echarts.init(document.getElementById('pieChart'));
+  E2.setOption(option2);
 });
 </script>
 
@@ -60,6 +125,8 @@ getHomeChartData().then(res => {
         <div class="introduction">
           <h2>{{ tt }}</h2>
           <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ info }}</h3>
+          <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具体操作参看操作文档。</h2>
+          <div id="pieChart" style="height: 360px;width: 400px;margin-left:70px;margin-top:10px;"></div>
         </div>
       </el-card>
     </el-col>
@@ -84,10 +151,7 @@ getHomeChartData().then(res => {
       </div>
       <div class="graph" style="margin-top: 20px;height:760px;">
         <el-card style="height:760px;">
-          <div
-            style="height: 600px;width: 1100px;margin-left: 20px;margin-top: 20px;"
-            id="myEcharts"
-          ></div>
+          <div style="height: 600px;width: 1100px;margin-left: 20px;margin-top: 20px;" id="myEcharts"></div>
         </el-card>
       </div>
     </el-col>
@@ -98,14 +162,17 @@ getHomeChartData().then(res => {
 .home {
   margin-bottom: auto;
 }
+
 .main-r {
   .el-card__body {
     padding: 0;
     display: flex;
+
     div {
       margin-left: 20px;
     }
   }
+
   p {
     font-size: 35px;
     line-height: 100px;

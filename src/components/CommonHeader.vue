@@ -6,17 +6,15 @@
                     <aim />
                 </el-icon>
             </el-button>
-            <h3 style="color:#fff">首页</h3>
         </div>
         <div class="Header-r">
             <el-dropdown>
                 <span>
-                    <p style="font-size:20px">{{ userName }}</p>
+                    <p style="font-size:20px">{{ store.state.Identity }}</p>
                 </span>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>用户信息</el-dropdown-item>
-                        <el-dropdown-item>退出系统</el-dropdown-item>
+                        <el-dropdown-item @click="Exit()">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -29,15 +27,19 @@ import {
     Aim
 } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
-import {ref} from 'vue'
+import { ref,watch } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 const store = useStore()
 
-const userName = '用户'
-
-function tab(){
+function tab() {
     store.commit('changeTab')
-    console.log(store.state.IsTab)
+    //console.log(store.state.IsTab)
+}
+function Exit(){
+    store.commit('exit')
+    router.push('Signin')
 }
 </script>
 
@@ -50,18 +52,24 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+
 .Header-l {
     display: flex;
     align-items: center;
+
     .el-button {
         margin-right: 20px;
     }
 }
+
 .Header-r {
     .user {
         widows: 40px;
         height: 40px;
         border-radius: 50%;
+    }
+    p{
+        color: rgb(179, 186, 79);
     }
 }
 </style>

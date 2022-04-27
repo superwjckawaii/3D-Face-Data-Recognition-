@@ -41,14 +41,15 @@ function Try() {
     store.commit('signIn')
     store.commit('notUser')
 }
-async function signIn(formEl: FormInstance | undefined){
+async function signIn(formEl: FormInstance | undefined) {
     let re = await isUser(formData.name, formData.password)//等待验证反馈
     if (!formEl) return
     formEl.validate((valid) => {
         if (valid) {
-            if (re.data["isUser"])
+            if (re.data["isUser"]) {
                 store.commit('signIn')
-            else console.warn('输入账号或密码错误！')
+                //console.log('用户登录！')
+            } else console.warn('输入账号或密码错误！')
         } else {
             console.log('error submit!')
             return false

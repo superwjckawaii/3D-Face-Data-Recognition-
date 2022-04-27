@@ -37,7 +37,7 @@
             <el-icon>
                 <document />
             </el-icon>
-            <template #title>API及相关</template>
+            <template #title>操作文档</template>
         </el-menu-item>
     </el-menu>
 </template>

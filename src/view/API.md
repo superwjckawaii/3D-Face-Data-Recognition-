@@ -21,9 +21,8 @@ urlpatterns=[
 ## 后端函数介绍
 ***
 ### test() [GET]
-记录用户访问网站信息
+- 记录用户访问网站信息
 
-niu
 ***
 ### Datapush() [GET]
 ***
