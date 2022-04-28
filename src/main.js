@@ -10,6 +10,8 @@ import VueAxios from 'vue-axios'
 import './api/mock.js'
 import { DemoBlock } from 'vite-plugin-markdown-vue/components'
 import 'highlight.js/styles/color-brewer.css'
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
 
 const store = createStore({
     state () {
@@ -48,7 +50,10 @@ app.use(ElementPlus)
 app.use(RouteIndex)
 app.use(store)
 app.use(VueAxios,axios)
+app.use(VueViewer)
+
 app.component('demo-block', DemoBlock)
+
 
 //登入校验
 RouteIndex.beforeEach((to,from) => {

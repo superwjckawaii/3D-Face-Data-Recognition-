@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { AddLocation } from '@element-plus/icons'
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import { getImage, executeFile, baseUrl, FindFile, DeleteFile } from '../api/data.js'
 import type {
   UploadFile,
@@ -19,6 +19,7 @@ const dialogImageUrl = ref('')
 const fileArray = ref(new Array())
 const loading = ref(false)
 const PictureData = ref(new Array())
+const PicVersion = ref(0)
 RefreshFileArray()
 function RefreshFileArray() {
   FindFile().then(res => {
@@ -58,9 +59,11 @@ const handleAvatarSuccess = (res: ElUploadProgressEvent, file: UploadFile) => {
 }
 function executeButton(filename) {
   //console.log(filename)
+  PicVersion.value += 1
   loading.value = true
+  imageUrl.value = ""
   executeFile(filename).then(res => {
-    imageUrl.value = baseUrl + "imageResult?name=" + filename
+    imageUrl.value = baseUrl + "imageResult?name=" + filename + '?t=' + new Date().getTime()
     console.log(imageUrl.value)
     loading.value = false
     fileArray.value.forEach((item, index, array) => {
@@ -155,7 +158,10 @@ function DeleteModel(fname) {
           <el-button size="large" type="primary" @click="RefreshFileArray()">本地文件刷新</el-button>
         </el-col>
         <el-col :span="10">
-          <img v-if="imageUrl" :src="imageUrl" style="width:400px;height:400px; margin-top: 20px;margin-bottom:20px;" />
+          <viewer :images="imageUrl">
+            <img v-if="imageUrl" :src="imageUrl" :key="PicVersion"
+              style="width:400px;height:400px; margin-top: 20px;margin-bottom:20px;" />
+          </viewer>
           <h3 v-if="imageUrl">若显示结果有误，检查模型、材质、图片文件是否匹配！</h3>
         </el-col>
       </el-card>

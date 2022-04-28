@@ -22,6 +22,8 @@ specifiers:
   three: ^0.138.3
   three-css2drender: ^1.0.0
   three-obj-mtl-loader: ^1.0.3
+  v-viewer: ^3.0.10
+  viewerjs: ^1.10.5
   vite: ^2.7.10
   vite-plugin-markdown: ^2.0.2
   vite-plugin-markdown-vue: ^0.1.2
@@ -55,6 +57,8 @@ dependencies:
   three: 0.138.3
   three-css2drender: 1.0.0_three@0.138.3
   three-obj-mtl-loader: 1.0.3
+  v-viewer: 3.0.10
+  viewerjs: 1.10.5
   vite-plugin-markdown: 2.0.2_vite@2.7.10
   vite-plugin-markdown-vue: 0.1.2_@types+markdown-it@12.2.3
   vue: 3.2.26
@@ -1439,7 +1443,7 @@ packages:
     dev: false
 
   /lodash/4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==, tarball: https://registry.npmmirror.com/lodash/download/lodash-4.17.21.tgz}
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: false
 
   /magic-string/0.25.7:
@@ -1906,6 +1910,19 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       unorm: 1.6.0
+    dev: false
+
+  /v-viewer/3.0.10:
+    resolution: {integrity: sha512-ZT5sYYS+Cy4z2TP/PuhqPyiK4NonaZzhkDPfiY9bwa5EjGyusO8R7/k/4c1ptvTzx2nBSV9MvQHl2X3XzhANqw==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      lodash: 4.17.21
+      viewerjs: 1.10.5
+    dev: false
+
+  /viewerjs/1.10.5:
+    resolution: {integrity: sha512-QwKrmXlSfKg5x4y74F/jicpHIRqBMMfHXyboOxHDi5n4XAaejjpalphPq4/HW6venQAoMiD57HpVwBk0JvqpSA==}
     dev: false
 
   /vite-plugin-markdown-vue/0.1.2_@types+markdown-it@12.2.3:
