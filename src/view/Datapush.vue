@@ -101,6 +101,8 @@ function DeleteModel(fname) {
     fileArray.value.splice(index, 1)
   })
   DeleteFile(fname.slice(0, -4) + '.mtl')
+  DeleteFile(fname.slice(0, -4) + '_landmarks.txt')
+  DeleteFile(fname.slice(0, -4) + '_landmarks.vtk')
 }
 </script>
 
@@ -152,7 +154,7 @@ function DeleteModel(fname) {
             <el-button size="large" type="primary">
               <el-icon>
                 <add-location></add-location>
-              </el-icon>选取文件
+              </el-icon>选取obj模型文件
             </el-button>
           </el-upload>
           <el-button size="large" type="primary" @click="RefreshFileArray()">本地文件刷新</el-button>

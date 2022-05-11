@@ -1,7 +1,7 @@
 <script setup>
 import ApiMd from './API.md'
 import { Mode } from 'vite-plugin-markdown'
-console.log(Mode.VUE)
+//console.log(Mode.VUE)
 </script>
 
 <template>

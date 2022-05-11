@@ -1,66 +1,74 @@
 <script setup >
-import * as THREE from 'three'
-import { OBJLoader, MTLLoader } from "three-obj-mtl-loader"
-import { baseUrl } from "../api/data.js"
+import { ref } from "vue";
+import { getLog, baseUrl, deleteLog } from "../api/data.js";
+const logArray = ref(new Array());
 
-// init
+getLogArray();
+function getLogArray() {
+  logArray.value = [];
 
-const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10)
-camera.position.z = 1
-
-const scene = new THREE.Scene()
-
-var lightAm = new THREE.AmbientLight('#DFDFDF', 1)
-scene.add(lightAm)
-
-var lightDirect = new THREE.DirectionalLight(0xffffff, 0.6)
-lightDirect.position.set(50, 200, -50)
-scene.add(lightDirect)
-
-
-const geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2)
-const material = new THREE.MeshNormalMaterial()
-
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
-
-let objLoader = new OBJLoader();
-let mtlLoader = new MTLLoader();
-mtlLoader.load(baseUrl+'getObj?name=testmeshA.mtl', function (materials) {
-    objLoader.setMaterials(materials);
-    objLoader.load(baseUrl+'getObj?name=testmeshA.obj', function (obj) {
-        //obj.position.set(10, 0, -6);
-        //obj.scale.set(0.01, 0.01, 0.01);
-        scene.add(obj);
-    })
-})
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-renderer.setSize(600, 600)
-
-// animation
-
-function animation(time) {
-
-    mesh.rotation.x = time / 2000;
-    mesh.rotation.y = time / 1000;
-
-    renderer.render(scene, camera);
-
+  getLog().then((res) => {
+    //console.log(res)
+    for (var i = 0; i < res.data["name"].length; i++) {
+      logArray.value.push({
+        id: i + 1,
+        name: res.data["name"][i],
+        startTime: res.data["startTime"][i],
+        endTime: res.data["endTime"][i],
+      });
+    }
+  });
 }
-function Render() {
-    let container = document.getElementById('container')
-    container.appendChild(renderer.domElement)
-    renderer.setAnimationLoop(animation)
-
-    animation(1000)
+function DeleteLog(logId) {
+  deleteLog(logId).then((res) => {
+    setTimeout(getLogArray(),500);
+  });
 }
 </script>
 
 <template>
-    <div>
-        <el-button @click="Render">3D Model</el-button>
-        <div id="container" style="height:600px; width:600px"></div>
-    </div>
+  <el-row class="home" :gutter="20" style="height: 100%; width: 100%">
+    <el-col :span="24" style="margin-top: 20px; width: 100%">
+      <h2>运行记录</h2>
+      <el-button @click="getLogArray()">Refresh</el-button>
+      <el-table
+        :data="logArray"
+        :default-sort="{ prop: 'id', order: 'descending' }"
+        style="margin-top: 20px; width: 100%"
+        height="900"
+      >
+        <el-table-column
+          prop="id"
+          label="任务序号"
+          width="200px"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="name"
+          label="文件名"
+          width="300px"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="startTime"
+          label="开始时间"
+          width="400px"
+          sortable
+        ></el-table-column>
+        <el-table-column
+          prop="endTime"
+          label="完成时间"
+          width="400px"
+          sortable
+        ></el-table-column>
+        <el-table-column label="操作" width="500px">
+          <template v-slot="scope">
+            <el-button @click="DeleteLog(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-col>
+  </el-row>
 </template>
 
 <style scoped>

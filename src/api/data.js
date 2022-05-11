@@ -115,3 +115,18 @@ export const isUser = (Tname,Tpassword) => {
     },
   });
 };
+export const getLog = () => {
+  return axios.request({
+    url: BaseUrl+"getLog",
+    method: "get",
+  });
+};
+export const deleteLog = (logId) => {
+  return axios.request({
+    url: BaseUrl+"deleteLog",
+    method: "get",
+    params: {
+      id:logId,
+    },
+  });
+};
