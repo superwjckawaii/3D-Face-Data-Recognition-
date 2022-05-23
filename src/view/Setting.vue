@@ -1,9 +1,14 @@
-<script setup >
+<script lang="ts" setup >
 import { ref } from "vue";
 import { getLog, baseUrl, deleteLog } from "../api/data.js";
 const logArray = ref(new Array());
+const DateValue = ref(Date.now());
 
 getLogArray();
+
+const disabledDate = (time: Date) => {
+  return time.getTime() > Date.now()
+}
 function getLogArray() {
   logArray.value = [];
 
@@ -21,7 +26,7 @@ function getLogArray() {
 }
 function DeleteLog(logId) {
   deleteLog(logId).then((res) => {
-    setTimeout(getLogArray(),500);
+    setTimeout(getLogArray(), 500);
   });
 }
 </script>
@@ -30,7 +35,17 @@ function DeleteLog(logId) {
   <el-row class="home" :gutter="20" style="height: 100%; width: 100%">
     <el-col :span="24" style="margin-top: 20px; width: 100%">
       <h2>运行记录</h2>
-      <el-button @click="getLogArray()">Refresh</el-button>
+      <div style="display: flex">
+        <el-date-picker
+          v-model="DateValue"
+          type="date"
+          placeholder="Pick a day"
+          :disabled-date="disabledDate"
+        />
+        <el-button style="margin-left: 20px" @click="getLogArray()"
+          >Refresh</el-button
+        >
+      </div>
       <el-table
         :data="logArray"
         :default-sort="{ prop: 'id', order: 'descending' }"

@@ -22,11 +22,16 @@ urlpatterns=[
 ***
 ### test() [GET]
 - 记录用户访问网站信息
-
+- 成功登录时向后端发送用户信息
 ***
-### Datapush() [GET]
+### Datapush() [POST]
+- 上传模型文件
+- 文件信息格式为FormData
+- 存储在服务端本地saved文件夹
 ***
 ### getVisit() [GET]
+- 获取网站访问流量数据
+- 
 ***
 ### imageResult() [GET]
 ***

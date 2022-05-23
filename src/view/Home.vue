@@ -120,7 +120,7 @@ getHomeChartData().then(res => {
     <el-col :span="8" style="margin-top: 20px;">
       <el-card shadow="hover" style="height:100%;">
         <div style="text-align:center;">
-          <img src="../assets/logo.png" />
+          <img src="../assets/logo2.jpeg" style="width:260px;height:260px"/>
         </div>
         <div class="introduction">
           <h2>{{ tt }}</h2>
